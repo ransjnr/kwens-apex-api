@@ -1,0 +1,427 @@
+{
+  "info": {
+    "name": "Unified Payments API",
+    "description": "Complete API collection for testing the Unified Payments API with Stripe and Paystack integrations",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
+      "value": "your_api_key_here",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "x-api-key",
+        "value": "{{apiKey}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Health & Monitoring",
+      "item": [
+        {
+          "name": "System Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health"]
+            }
+          }
+        },
+        {
+          "name": "Gateway Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/gateways",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health", "gateways"]
+            }
+          }
+        },
+        {
+          "name": "Performance Metrics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/performance",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health", "performance"]
+            }
+          }
+        },
+        {
+          "name": "Readiness Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/ready",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health", "ready"]
+            }
+          }
+        },
+        {
+          "name": "Liveness Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/health/live",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "health", "live"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payment Processing",
+      "item": [
+        {
+          "name": "Process Payment - Stripe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gateway\": \"stripe\",\n  \"amount\": 29.99,\n  \"currency\": \"USD\",\n  \"customerEmail\": \"customer@example.com\",\n  \"description\": \"Premium Plan Subscription\",\n  \"metadata\": {\n    \"orderId\": \"order_123\",\n    \"plan\": \"premium\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/process",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "process"]
+            }
+          }
+        },
+        {
+          "name": "Process Payment - Paystack",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gateway\": \"paystack\",\n  \"amount\": 5000,\n  \"currency\": \"NGN\",\n  \"customerEmail\": \"customer@example.com\",\n  \"description\": \"Product Purchase\",\n  \"metadata\": {\n    \"orderId\": \"order_456\",\n    \"product\": \"widget\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/process",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "process"]
+            }
+          }
+        },
+        {
+          "name": "Create Payment Intent - Stripe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gateway\": \"stripe\",\n  \"amount\": 49.99,\n  \"currency\": \"EUR\",\n  \"customerEmail\": \"customer@example.com\",\n  \"description\": \"Enterprise Plan\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/intent",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "intent"]
+            }
+          }
+        },
+        {
+          "name": "Create Payment Intent - Paystack",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gateway\": \"paystack\",\n  \"amount\": 10000,\n  \"currency\": \"GHS\",\n  \"customerEmail\": \"customer@example.com\",\n  \"description\": \"Service Subscription\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/intent",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "intent"]
+            }
+          }
+        },
+        {
+          "name": "Process Refund - Stripe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gateway\": \"stripe\",\n  \"paymentIntentId\": \"pi_1234567890\",\n  \"amount\": 29.99,\n  \"reason\": \"Customer requested refund\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/refund",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "refund"]
+            }
+          }
+        },
+        {
+          "name": "Process Refund - Paystack",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gateway\": \"paystack\",\n  \"transactionReference\": \"ref_1234567890\",\n  \"amount\": 5000,\n  \"reason\": \"Product defect\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/refund",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "refund"]
+            }
+          }
+        },
+        {
+          "name": "Get Payment Status - Stripe",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/status/stripe/pi_1234567890",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "status", "stripe", "pi_1234567890"]
+            }
+          }
+        },
+        {
+          "name": "Get Payment Status - Paystack",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/status/paystack/ref_1234567890",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "status", "paystack", "ref_1234567890"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Gateway Information",
+      "item": [
+        {
+          "name": "Get All Gateways",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/gateways",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "gateways"]
+            }
+          }
+        },
+        {
+          "name": "Get Stripe Capabilities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/gateways/stripe",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "gateways", "stripe"]
+            }
+          }
+        },
+        {
+          "name": "Get Paystack Capabilities",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/payments/gateways/paystack",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments", "gateways", "paystack"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Webhooks",
+      "item": [
+        {
+          "name": "Stripe Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Stripe-Signature",
+                "value": "whsec_your_webhook_secret_here"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"payment_intent.succeeded\",\n  \"data\": {\n    \"object\": {\n      \"id\": \"pi_1234567890\",\n      \"amount\": 2999,\n      \"currency\": \"usd\",\n      \"status\": \"succeeded\"\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/webhooks/stripe",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "webhooks", "stripe"]
+            }
+          }
+        },
+        {
+          "name": "Paystack Webhook",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Paystack-Signature",
+                "value": "your_webhook_signature_here"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"event\": \"charge.success\",\n  \"data\": {\n    \"reference\": \"ref_1234567890\",\n    \"amount\": 500000,\n    \"currency\": \"NGN\",\n    \"status\": \"success\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/webhooks/paystack",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "webhooks", "paystack"]
+            }
+          }
+        },
+        {
+          "name": "Unified Webhook - Stripe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Stripe-Signature",
+                "value": "whsec_your_webhook_secret_here"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gateway\": \"stripe\",\n  \"type\": \"payment_intent.succeeded\",\n  \"data\": {\n    \"object\": {\n      \"id\": \"pi_1234567890\",\n      \"amount\": 2999,\n      \"currency\": \"usd\",\n      \"status\": \"succeeded\"\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/webhooks/unified",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "webhooks", "unified"]
+            }
+          }
+        },
+        {
+          "name": "Unified Webhook - Paystack",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Paystack-Signature",
+                "value": "your_webhook_signature_here"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"gateway\": \"paystack\",\n  \"event\": \"charge.success\",\n  \"data\": {\n    \"reference\": \"ref_1234567890\",\n    \"amount\": 500000,\n    \"currency\": \"NGN\",\n    \"status\": \"success\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/webhooks/unified",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "webhooks", "unified"]
+            }
+          }
+        },
+        {
+          "name": "Webhook Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/webhooks/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "webhooks", "health"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "API Information",
+      "item": [
+        {
+          "name": "API Overview",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api",
+              "host": ["{{baseUrl}}"],
+              "path": ["api"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+} 
